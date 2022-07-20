@@ -115,14 +115,16 @@ exports.searchOrder = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
 
     try {
-        if (!order_id) {
+        if (!req.params.order_id) {
             return res.status(400).json("Missing order_id");
         }
+
         const Info = await orderModel.findOneAndDelete(
             { order_id: req.params.order_id }
         );
         if (!Info) return res.status(400).json({ message: "Order does not exist" });
         return res.json("Successfully deleted");
+
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
